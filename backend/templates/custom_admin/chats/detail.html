@@ -1,0 +1,198 @@
+{% extends 'custom_admin/base/base.html' %}
+
+{% block title %}Чат #{{ conversation.id }}{% endblock %}
+
+{% block page_title %}Чат #{{ conversation.id }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'custom_admin:admin_index' %}">Главная</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'custom_admin:chat_list' %}">Чаты</a></li>
+    <li class="breadcrumb-item active">Чат #{{ conversation.id }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- Основная информация о чате -->
+        <div class="col-md-8 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Информация о чате</h5>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <i class="fas fa-trash me-1"></i> Удалить чат
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 30%;">ID:</th>
+                                    <td>{{ conversation.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Участники:</th>
+                                    <td>
+                                        {% for participant in conversation.participants.all %}
+                                            <a href="{% url 'custom_admin:user_detail' pk=participant.id %}">
+                                                {{ participant.username }}
+                                            </a>
+                                            {% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Лот:</th>
+                                    <td>
+                                        {% if conversation.car %}
+                                            <a href="{% url 'custom_admin:car_detail' pk=conversation.car.id %}">
+                                                {{ conversation.car.brand }} {{ conversation.car.model }}
+                                            </a>
+                                        {% else %}
+                                            <span class="text-muted">Не указан</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Создан:</th>
+                                    <td>{{ conversation.created_at|date:"d.m.Y H:i:s" }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Последнее обновление:</th>
+                                    <td>{{ conversation.updated_at|date:"d.m.Y H:i:s" }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Количество сообщений:</th>
+                                    <td>{{ messages_list|length }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Боковая информация и действия -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Действия</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {% if conversation.car %}
+                            <a href="{% url 'custom_admin:car_detail' pk=conversation.car.id %}" class="btn btn-info">
+                                <i class="fas fa-car me-1"></i> Просмотр лота
+                            </a>
+                        {% endif %}
+                        
+                        {% for participant in conversation.participants.all %}
+                            <a href="{% url 'custom_admin:user_detail' pk=participant.id %}" class="btn btn-outline-primary">
+                                <i class="fas fa-user me-1"></i> Профиль {{ participant.username }}
+                            </a>
+                        {% endfor %}
+                        
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <i class="fas fa-trash me-1"></i> Удалить чат
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- История сообщений -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">История сообщений</h5>
+        </div>
+        <div class="card-body">
+            <div class="chat-messages p-3" style="max-height: 600px; overflow-y: auto;">
+                {% for message in messages_list %}
+                    <div class="message mb-3 {% if message.sender == request.user %}message-self{% endif %}">
+                        <div class="card {% if message.sender == request.user %}bg-primary text-white float-end{% else %}{% endif %}" style="max-width: 80%;">
+                            <div class="card-header d-flex justify-content-between align-items-center py-1">
+                                <div>
+                                    <a href="{% url 'custom_admin:user_detail' pk=message.sender.id %}" class="{% if message.sender == request.user %}text-white{% endif %} text-decoration-none">
+                                        {{ message.sender.username }}
+                                    </a>
+                                </div>
+                                <small class="{% if message.sender == request.user %}text-white{% else %}text-muted{% endif %}">
+                                    {{ message.timestamp|date:"d.m.Y H:i:s" }}
+                                </small>
+                            </div>
+                            <div class="card-body py-2">
+                                <p class="card-text mb-0">{{ message.content|linebreaks }}</p>
+                            </div>
+                            <div class="card-footer text-end py-1">
+                                <small class="{% if message.sender == request.user %}text-white{% else %}text-muted{% endif %}">
+                                    {% if message.is_read %}
+                                        <i class="fas fa-check-double me-1"></i> Прочитано
+                                    {% else %}
+                                        <i class="fas fa-check me-1"></i> Отправлено
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                {% empty %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-comments fa-3x text-secondary mb-3"></i>
+                        <p class="mb-0">В этом чате еще нет сообщений.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно подтверждения удаления -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Подтвердите удаление</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены, что хотите удалить чат (ID: {{ conversation.id }})?</p>
+                    <p>Участники: 
+                        {% for participant in conversation.participants.all %}
+                            {{ participant.username }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p class="text-danger mb-0">
+                        <strong>Внимание:</strong> Это действие нельзя отменить. Будут удалены все сообщения в этом чате.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <form method="post" action="{% url 'custom_admin:chat_delete' pk=conversation.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .message {
+        margin-bottom: 15px;
+    }
+    
+    .message-self {
+        text-align: right;
+    }
+    
+    .message .card {
+        display: inline-block;
+        border-radius: 15px;
+    }
+    
+    .message-self .card {
+        border-radius: 15px;
+    }
+</style>
+{% endblock %}

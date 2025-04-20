@@ -1,0 +1,410 @@
+.email-verification-container {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: rgba(246, 244, 240, 0.9);
+  border: 1px solid rgba(218, 205, 190, 0.3);
+  box-shadow: 0 8px 16px rgba(218, 205, 190, 0.15);
+  position: relative;
+}
+
+/* Обновленный статус верификации */
+.email-verified-container {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: rgba(192, 210, 182, 0.1);
+  border: 1px solid rgba(192, 210, 182, 0.3);
+  box-shadow: 0 4px 12px rgba(192, 210, 182, 0.1);
+}
+
+.verified-status {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.verified-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(192, 210, 182, 0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.verified-icon i {
+  color: #a3be8c;
+  font-size: 1.5rem;
+}
+
+.verified-text h3 {
+  color: #8a7868;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem 0;
+}
+
+.verified-text p {
+  color: #9D8A80;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Неподтвержденный статус */
+.unverified-header {
+  margin-bottom: 1.5rem;
+}
+
+.unverified-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.unverified-badge i {
+  color: #e0c896;
+  font-size: 1.2rem;
+}
+
+.unverified-description {
+  color: #766C63;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+
+/* Мини контейнер верификации в профиле */
+.verification-mini-container {
+  background-color: rgba(246, 244, 240, 0.9);
+  border-radius: 8px;
+  border: 1px solid rgba(218, 205, 190, 0.3);
+  box-shadow: 0 8px 16px rgba(218, 205, 190, 0.15);
+  overflow: hidden;
+}
+
+.verification-mini-container .verification-header {
+  background: linear-gradient(to right, #f0ece8, #e5e0d9);
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(218, 205, 190, 0.3);
+}
+
+.verification-mini-container .verification-header h3 {
+  margin: 0;
+  color: #8a7868;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.verification-mini-container .verification-content {
+  padding: 1.5rem;
+}
+
+/* Сообщения об успехе/ошибке */
+.success-message {
+  background-color: rgba(192, 210, 182, 0.1);
+  color: #a3be8c;
+  border: 1px solid rgba(192, 210, 182, 0.3);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.success-message i {
+  font-size: 1.1rem;
+}
+
+/* Кнопка повторной отправки в контексте помощи по верификации */
+.verification-help .resend-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 5px;
+  font-size: inherit;
+  color: #9D8A80;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: underline;
+}
+
+.verification-help .resend-button:hover {
+  color: #8a7868;
+}
+
+.verification-help .resend-button:disabled {
+  color: #9d8a8080;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+/* Стили для формы верификации во время входа */
+.verification-container {
+  padding: 1.5rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(138, 120, 104, 0.1);
+  text-align: center;
+  position: relative;
+}
+
+.verification-container h2 {
+  margin: 0 0 1.5rem 0;
+  color: #1e2b4d;
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: var(--font-primary);
+}
+
+.verification-sent-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: #766C63;
+  font-size: 0.9rem;
+}
+
+.verification-sent-info i {
+  color: #9D8A80;
+  font-size: 1rem;
+}
+
+.verification-sent-email {
+  color: #8a7868;
+  font-weight: 600;
+}
+
+/* Код верификации из 6 ячеек */
+.verification-code-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.verification-code-box {
+  position: relative;
+  width: 100%;
+  border: 2px solid #dcd6cf;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.verification-code-single {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #8a7868;
+  border: none;
+  background: transparent;
+  text-align: center;
+}
+
+.verification-code-single:focus {
+  outline: none;
+}
+
+.verification-code-box.active {
+  border-color: #c0d2b6;
+}
+
+.verification-code-box.filled {
+  border-color: #9D8A80;
+}
+
+/* Скрытое поле для реального ввода кода */
+.verification-code-hidden {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.verification-actions {
+  margin: 1.5rem 0;
+}
+
+.btn-verification {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #9D8A80;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #8c7c72;
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+  background-color: #d4a59a;
+  cursor: not-allowed;
+}
+
+.verification-timer {
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  color: #9D8A80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.verification-resend {
+  background: none;
+  border: none;
+  color: #9D8A80;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.verification-resend:disabled {
+  text-decoration: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background-color: rgba(212, 165, 154, 0.1);
+  color: #d4a59a;
+  border-radius: 8px;
+  padding: 0.6rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Успешная верификация */
+.verification-success {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(138, 120, 104, 0.1);
+  position: relative;
+}
+
+.success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background-color: rgba(192, 210, 182, 0.2);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.success-icon::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(192, 210, 182, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.05);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+.success-icon i {
+  font-size: 40px;
+  color: #a3be8c;
+}
+
+.verification-success h2 {
+  margin: 0 0 1rem 0;
+  color: #8a7868;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.verification-success p {
+  color: #9D8A80;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.login-verification-form {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+@media (max-width: 576px) {
+  .unverified-status,
+  .email-verified-status {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .verification-button {
+    width: 100%;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .button-link {
+    text-align: center;
+  }
+}

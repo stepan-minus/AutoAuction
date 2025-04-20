@@ -1,0 +1,199 @@
+/* Общие стили для футера */
+.site-footer {
+  background-color: #afa7a2;
+  color: white;
+  padding: 50px 0 20px;
+  margin-top: 50px;
+  border-top: 1px solid var(--border-color);
+  margin-top: auto; /* Обеспечивает расположение футера внизу страницы */
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Стили для колонок */
+.footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-column h3 {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #8a7868;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-column h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background-color: var(--accent-color);
+}
+
+.footer-column p {
+  line-height: 1.6;
+  color: #8a7868;
+}
+
+/* Стили для ссылок */
+.footer-links, .footer-contacts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li, .footer-contacts li {
+  margin-bottom: 12px;
+}
+
+.footer-links a, .footer-contacts a, .footer-info a {
+  color: #8a7868;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover, .footer-contacts a:hover, .footer-info a:hover {
+  color: var(--accent-color);
+}
+
+/* Стили для контактов */
+.footer-contacts li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.footer-contacts i {
+  color: var(--accent-color);
+  font-size: 1rem;
+  margin-top: 3px;
+}
+
+/* Стили для соцсетей */
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+.social-links i {
+  font-size: 1.2rem;
+  color: var(--light-text);
+}
+
+/* Стили для средней информационной части */
+.footer-info {
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+  color: #8a7868;
+  line-height: 1.6;
+}
+
+/* Стили для нижней части */
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.copyright p {
+  font-size: 0.9rem;
+  color: #8a7868;
+}
+
+.legal-info p {
+  font-size: 0.8rem;
+  color: #8a7868;
+  line-height: 1.6;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .footer-columns {
+    flex-direction: column;
+  }
+  
+  .footer-column {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+/* Специальные стили для темной темы */
+body.dark-theme .site-footer {
+  background-color: var(--darker-bg);
+}
+
+body.dark-theme .footer-column h3 {
+  color: var(--primary-light);
+}
+
+body.dark-theme .footer-column p,
+body.dark-theme .footer-links a,
+body.dark-theme .footer-contacts a,
+body.dark-theme .footer-info a {
+  color: var(--light-gray-text);
+}
+
+body.dark-theme .social-links a {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .footer-info,
+body.dark-theme .footer-bottom {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Эффект неоновой подсветки для темной темы */
+body.dark-theme .footer-column h3::after {
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+body.dark-theme .social-links a:hover {
+  box-shadow: 0 0 15px var(--accent-glow);
+}

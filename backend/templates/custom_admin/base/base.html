@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{% block title %}Админ-панель{% endblock %} | Автоаукцион</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Шрифты и иконки -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Общие стили -->
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --topbar-height: 60px;
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+            --success-color: #1cc88a;
+            --info-color: #36b9cc;
+            --warning-color: #f6c23e;
+            --danger-color: #e74a3b;
+            --light-color: #f8f9fc;
+            --dark-color: #5a5c69;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fc;
+        }
+        
+        /* Сайдбар */
+        #sidebar {
+            width: var(--sidebar-width);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 999;
+            background: #4e73df;
+            background: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+            color: white;
+            transition: all 0.3s;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        
+
+        
+        #sidebar .sidebar-header {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        #sidebar .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        #sidebar ul.components {
+            padding: 0;
+            list-style: none;
+        }
+        
+        #sidebar ul li {
+            padding: 0.5rem 0;
+        }
+        
+        #sidebar ul li a {
+            padding: 0.75rem 1.5rem;
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+        
+        #sidebar ul li a:hover,
+        #sidebar ul li a.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        #sidebar ul li a i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        #sidebar .sidebar-footer {
+            padding: 1rem;
+            margin-top: auto;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        
+        /* Контент */
+        #content {
+            width: calc(100% - var(--sidebar-width));
+            margin-left: var(--sidebar-width);
+            transition: all 0.3s;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+
+        
+        /* Топбар */
+        #topbar {
+            height: var(--topbar-height);
+            background: white;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        
+        #topbar .navbar-brand {
+            display: none;
+        }
+        
+
+        
+        .dropdown-menu {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+            border: none;
+        }
+        
+        /* Основное содержимое */
+        .main-content {
+            padding: 24px;
+            flex: 1;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumb {
+            background-color: transparent;
+            margin-bottom: 1.5rem;
+            padding: 0;
+        }
+        
+        /* Заголовок страницы */
+        .page-header {
+            margin-bottom: 1.5rem;
+        }
+        
+        .page-header h1 {
+            font-weight: 500;
+            font-size: 1.75rem;
+            color: var(--dark-color);
+            margin-bottom: 0;
+        }
+        
+        /* Карточки */
+        .card {
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #e3e6f0;
+            padding: 0.75rem 1.25rem;
+        }
+        
+        .card-header h6 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.8rem;
+            margin-bottom: 0;
+        }
+        
+        /* Боковые границы для карточек статистики */
+        .border-left-primary {
+            border-left: 0.25rem solid var(--primary-color) !important;
+        }
+        
+        .border-left-success {
+            border-left: 0.25rem solid var(--success-color) !important;
+        }
+        
+        .border-left-info {
+            border-left: 0.25rem solid var(--info-color) !important;
+        }
+        
+        .border-left-warning {
+            border-left: 0.25rem solid var(--warning-color) !important;
+        }
+        
+        .border-left-danger {
+            border-left: 0.25rem solid var(--danger-color) !important;
+        }
+        
+        /* Утилиты */
+        .text-xs {
+            font-size: 0.7rem;
+        }
+        
+        .text-gray-300 {
+            color: #dddfeb !important;
+        }
+        
+        .text-gray-800 {
+            color: #5a5c69 !important;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 991.98px) {
+            #topbar .navbar-brand {
+                display: block;
+            }
+            
+            /* Переопределяем стили для мобильных устройств */
+            .wrapper {
+                flex-direction: column;
+            }
+            
+            #sidebar {
+                width: 100%;
+                min-width: 100%;
+                max-width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            #content {
+                width: 100%;
+                margin-left: 0;
+            }
+            
+            #sidebar .sidebar-footer {
+                position: static;
+            }
+        }
+        
+        /* Дополнительные стили */
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Боковое меню -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-car me-2"></i> АвтоАукцион</h3>
+            </div>
+            
+            <ul class="components">
+                <li>
+                    <a href="{% url 'custom_admin:admin_index' %}" class="{% if request.path == '/admin/' %}active{% endif %}">
+                        <i class="fas fa-tachometer-alt"></i> Панель управления
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'custom_admin:car_list' %}" class="{% if '/admin/cars/' in request.path %}active{% endif %}">
+                        <i class="fas fa-car"></i> Лоты
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'custom_admin:user_list' %}" class="{% if '/admin/users/' in request.path %}active{% endif %}">
+                        <i class="fas fa-users"></i> Пользователи
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'custom_admin:bid_list' %}" class="{% if '/admin/bids/' in request.path %}active{% endif %}">
+                        <i class="fas fa-gavel"></i> Ставки
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'custom_admin:chat_list' %}" class="{% if '/admin/chats/' in request.path %}active{% endif %}">
+                        <i class="fas fa-comments"></i> Чаты
+                    </a>
+                </li>
+                <!-- Кнопка "Перейти на сайт" удалена по запросу пользователя -->
+            </ul>
+            
+            <div class="sidebar-footer">
+                <p class="mb-0">&copy; 2025 АвтоАукцион</p>
+                <small>Админ-панель v1.0</small>
+            </div>
+        </nav>
+        
+        <!-- Содержимое страницы -->
+        <div id="content">
+            <!-- Верхняя панель -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white" id="topbar">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'custom_admin:admin_index' %}">
+                        <i class="fas fa-car me-2"></i> АвтоАукцион
+                    </a>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <!-- Уведомления (если нужно) -->
+                        <div class="dropdown me-3">
+                            <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Индикатор новых уведомлений -->
+                                <span class="position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger">
+                                    {{ notifications_count|default:'0' }}
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown" style="width: 300px;">
+                                <li><h6 class="dropdown-header">Уведомления</h6></li>
+                                {% if notifications %}
+                                    {% for notification in notifications %}
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <span class="small text-gray-500">{{ notification.timestamp|date:"d.m.Y H:i" }}</span>
+                                                <p class="mb-0">{{ notification.message }}</p>
+                                            </a>
+                                        </li>
+                                        {% if not forloop.last %}
+                                            <li><hr class="dropdown-divider"></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <li><a class="dropdown-item text-center py-3" href="#">Нет новых уведомлений</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center" href="#">Показать все уведомления</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Профиль пользователя -->
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="me-2 d-none d-lg-inline text-gray-600 small">{{ request.user.username }}</span>
+                                {% if request.user.profile.avatar %}
+                                    <img class="img-profile rounded-circle" src="{{ request.user.profile.avatar.url }}" alt="{{ request.user.username }}" style="width: 32px; height: 32px; object-fit: cover;">
+                                {% else %}
+                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                        {{ request.user.username|slice:"0:1"|upper }}
+                                    </div>
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i> Выйти
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- Основное содержимое -->
+            <div class="main-content">
+                <!-- Хлебные крошки -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        {% block breadcrumb %}
+                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Панель управления</li>
+                        {% endblock %}
+                    </ol>
+                </nav>
+                
+                <!-- Заголовок страницы -->
+                <div class="page-header d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1>{% block page_title %}Панель управления{% endblock %}</h1>
+                    {% block page_actions %}{% endblock %}
+                </div>
+                
+                <!-- Флэш-сообщения -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Содержимое -->
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для выхода -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Готовы выйти?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Выберите "Выйти" ниже, если вы готовы завершить текущий сеанс.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a class="btn btn-primary" href="{% url 'custom_admin:admin_logout' %}">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Скрипт для перехода на фронтенд -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const frontendLink = document.getElementById('frontendLink');
+            if (frontendLink) {
+                // Hardcoded URL для Replit - это самый надежный вариант
+                // Формат прямого URL
+                frontendLink.href = 'https://{{ request.META.HTTP_HOST }}';
+                console.log('URL для фронтенда:', frontendLink.href);
+                
+                // Добавляем две кнопки для переключения между интерфейсами
+                const adminButton = document.createElement('button');
+                adminButton.className = 'btn btn-sm btn-outline-secondary ms-2';
+                adminButton.textContent = 'Админка (порт 5000)';
+                adminButton.onclick = function() {
+                    window.location.href = 'https://{{ request.META.HTTP_HOST }}';
+                };
+                
+                const frontendButton = document.createElement('button');
+                frontendButton.className = 'btn btn-sm btn-primary ms-2';
+                frontendButton.textContent = 'Фронтенд (порт 5001)';
+                frontendButton.onclick = function() {
+                    window.open('https://{{ request.META.HTTP_HOST }}', '_blank');
+                };
+                
+                // Добавляем информационное сообщение
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'alert alert-info mt-3';
+                infoDiv.innerHTML = `
+                    <p><strong>Информация о доступе:</strong></p>
+                    <p>• Административная панель: текущий URL (порт 5000)</p>
+                    <p>• Фронтенд: тот же URL (порт 5001)</p>
+                `;
+                
+                // Добавляем элементы в верхнюю часть страницы
+                const contentDiv = document.querySelector('.main-content');
+                if (contentDiv) {
+                    contentDiv.insertBefore(infoDiv, contentDiv.firstChild);
+                }
+            }
+        });
+    </script>
+    
+    <!-- Дополнительные скрипты -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

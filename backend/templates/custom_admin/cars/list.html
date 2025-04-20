@@ -1,0 +1,233 @@
+{% extends 'custom_admin/base/base.html' %}
+
+{% block title %}Управление лотами{% endblock %}
+
+{% block page_title %}Управление лотами{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'custom_admin:admin_index' %}">Главная</a></li>
+    <li class="breadcrumb-item active">Лоты</li>
+{% endblock %}
+
+{% block content %}
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Список лотов</h5>
+            <a href="{% url 'custom_admin:car_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i> Добавить лот
+            </a>
+        </div>
+        <div class="card-body">
+            <!-- Фильтры и поиск -->
+            <form method="get" class="mb-4">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Поиск по названию или описанию" value="{{ search_query }}">
+                            <button type="submit" class="btn btn-outline-secondary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="status" class="form-select" onchange="this.form.submit()">
+                            <option value="">Все статусы</option>
+                            <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Активные</option>
+                            <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Завершенные</option>
+                            <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Отмененные</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="sort" class="form-select" onchange="this.form.submit()">
+                            <option value="created_desc" {% if sort_by == 'created_desc' %}selected{% endif %}>Новые сначала</option>
+                            <option value="created_asc" {% if sort_by == 'created_asc' %}selected{% endif %}>Старые сначала</option>
+                            <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Цена (высокая-низкая)</option>
+                            <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Цена (низкая-высокая)</option>
+                            <option value="end_time_asc" {% if sort_by == 'end_time_asc' %}selected{% endif %}>Скоро завершатся</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'custom_admin:car_list' %}" class="btn btn-outline-secondary w-100">Сбросить</a>
+                    </div>
+                </div>
+            </form>
+            
+            <!-- Таблица лотов -->
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Изображение</th>
+                            <th>Марка/Модель</th>
+                            <th>Продавец</th>
+                            <th>Текущая цена</th>
+                            <th>Статус</th>
+                            <th>Конец аукциона</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for car in cars %}
+                            <tr>
+                                <td>{{ car.id }}</td>
+                                <td>
+                                    {% if car.image %}
+                                        <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}" class="img-thumbnail" style="width: 60px; height: 45px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="bg-light text-center p-2" style="width: 60px; height: 45px;">
+                                            <i class="fas fa-car text-secondary"></i>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <strong>{{ car.brand }} {{ car.model }}</strong>
+                                    <div class="small text-muted">{{ car.year }}, {{ car.mileage|default:0 }} км</div>
+                                </td>
+                                <td>
+                                    <a href="{% url 'custom_admin:user_detail' pk=car.seller.id %}">
+                                        {{ car.seller.username }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if car.current_price %}
+                                        {{ car.current_price }} ₽
+                                        <div class="small text-muted">Ставок: {{ car.bids.count }}</div>
+                                    {% else %}
+                                        {{ car.starting_price }} ₽
+                                        <div class="small text-muted">Ставок нет</div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if car.status == 'active' %}
+                                        <span class="badge bg-success">Активный</span>
+                                    {% elif car.status == 'completed' %}
+                                        <span class="badge bg-primary">Завершен</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Отменен</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ car.end_time|date:"d.m.Y H:i" }}
+                                    {% if car.status == 'active' %}
+                                        <div class="small text-muted">{{ car.time_remaining }}</div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{% url 'custom_admin:car_detail' pk=car.id %}" class="btn btn-sm btn-info" title="Просмотр">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{% url 'custom_admin:car_edit' pk=car.id %}" class="btn btn-sm btn-warning" title="Редактировать">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Удалить" data-bs-toggle="modal" data-bs-target="#deleteModal{{ car.id }}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Модальное окно для подтверждения удаления -->
+                                    <div class="modal fade" id="deleteModal{{ car.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ car.id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel{{ car.id }}">Подтвердите удаление</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Вы уверены, что хотите удалить лот "{{ car.brand }} {{ car.model }}" (ID: {{ car.id }})?</p>
+                                                    <p class="text-danger mb-0">
+                                                        <strong>Внимание:</strong> Это действие нельзя отменить. Будут удалены все данные лота, включая изображения и историю ставок.
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                                    <form method="post" action="{% url 'custom_admin:car_delete' pk=car.id %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger">Удалить</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-center py-3">
+                                    Лотов не найдено.
+                                    <a href="{% url 'custom_admin:car_create' %}" class="ms-2">Создать новый лот?</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Пагинация -->
+            {% if cars.has_other_pages %}
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if cars.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ cars.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for i in cars.paginator.page_range %}
+                            {% if cars.number == i %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                            {% elif i > cars.number|add:'-3' and i < cars.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ i }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">{{ i }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if cars.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ cars.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ cars.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

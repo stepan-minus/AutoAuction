@@ -1,0 +1,279 @@
+{% extends 'custom_admin/base/base.html' %}
+
+{% block title %}Панель управления{% endblock %}
+
+{% block page_title %}Панель управления{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Главная</li>
+{% endblock %}
+
+{% block content %}
+    <!-- Основные статистические карточки -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Активные лоты</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ active_cars_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-car fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Общая сумма ставок</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_bids_amount|floatformat:2 }} ₽</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-ruble-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Пользователей</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ users_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Завершено аукционов</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ completed_cars_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-gavel fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основные разделы -->
+    <div class="row">
+        <!-- Скоро завершающиеся аукционы -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Скоро завершающиеся аукционы</h6>
+                    <a href="{% url 'custom_admin:car_list' %}?sort=end_time_asc&status=active" class="btn btn-sm btn-primary">
+                        Показать все
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Лот</th>
+                                    <th>Текущая цена</th>
+                                    <th>Ставок</th>
+                                    <th>Окончание</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for car in ending_soon_cars %}
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'custom_admin:car_detail' pk=car.id %}">
+                                                {{ car.brand }} {{ car.model }}
+                                            </a>
+                                        </td>
+                                        <td>{{ car.current_price|default:car.starting_price }} ₽</td>
+                                        <td>{{ car.bids.count }}</td>
+                                        <td>
+                                            {{ car.end_time|date:"d.m.Y H:i" }}
+                                            <div class="small text-danger">{{ car.time_remaining }}</div>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">Нет скоро завершающихся аукционов</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Последние ставки -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Последние ставки</h6>
+                    <a href="{% url 'custom_admin:bid_list' %}" class="btn btn-sm btn-primary">
+                        Показать все
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Пользователь</th>
+                                    <th>Лот</th>
+                                    <th>Сумма</th>
+                                    <th>Дата</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for bid in recent_bids %}
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'custom_admin:user_detail' pk=bid.bidder.id %}">
+                                                {{ bid.bidder.username }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'custom_admin:car_detail' pk=bid.car.id %}">
+                                                {{ bid.car.brand }} {{ bid.car.model }}
+                                            </a>
+                                        </td>
+                                        <td>{{ bid.amount }} ₽</td>
+                                        <td>{{ bid.created_at|date:"d.m.Y H:i" }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">Нет ставок</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Недавно зарегистрированные пользователи -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Новые пользователи</h6>
+                    <a href="{% url 'custom_admin:user_list' %}" class="btn btn-sm btn-primary">
+                        Показать всех
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Пользователь</th>
+                                    <th>Email</th>
+                                    <th>Дата регистрации</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in new_users %}
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'custom_admin:user_detail' pk=user.id %}">
+                                                {{ user.username }}
+                                            </a>
+                                            {% if user.is_staff %}
+                                                <span class="badge bg-info text-white">Админ</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="3" class="text-center">Нет новых пользователей</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Недавно завершенные аукционы -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Недавно завершенные аукционы</h6>
+                    <a href="{% url 'custom_admin:car_list' %}?status=completed" class="btn btn-sm btn-primary">
+                        Показать все
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Лот</th>
+                                    <th>Победитель</th>
+                                    <th>Финальная цена</th>
+                                    <th>Завершен</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for history in recent_completed_auctions %}
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'custom_admin:car_detail' pk=history.car.id %}">
+                                                {{ history.car.brand }} {{ history.car.model }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {% if history.winner %}
+                                                <a href="{% url 'custom_admin:user_detail' pk=history.winner.id %}">
+                                                    {{ history.winner.username }}
+                                                </a>
+                                            {% else %}
+                                                <span class="text-muted">Нет победителя</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ history.final_price }} ₽</td>
+                                        <td>{{ history.ended_at|date:"d.m.Y H:i" }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">Нет завершенных аукционов</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

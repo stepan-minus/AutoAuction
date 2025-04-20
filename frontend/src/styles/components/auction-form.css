@@ -1,0 +1,423 @@
+/* Стили для компонента AuctionForm с поддержкой множественных изображений */
+/* Использует новую цветовую схему и типографику */
+
+/* Основной контейнер формы */
+.auction-form-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  background-color: var(--bg-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  position: relative;
+  border: 1px solid rgba(218, 205, 190, 0.2);
+}
+
+.auction-form-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(218, 205, 190, 0.05), rgba(218, 205, 190, 0.02));
+  opacity: 0.8;
+  border-radius: var(--radius-lg);
+  z-index: -1;
+}
+
+.auction-form-title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-header);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.auction-form-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.auction-form-section-title {
+  font-family: var(--font-primary);
+  font-weight: 700; /* Более жирный шрифт */
+  color: #3a312a; /* Темнее цвет для лучшей читаемости */
+  margin-bottom: var(--spacing-md);
+  font-size: 1.2rem; /* Немного увеличиваем размер */
+  border-left: 3px solid #8a7868; /* Добавляем левую границу для акцента */
+  padding-left: 10px; /* Отступ от границы */
+}
+
+/* Контейнер для изображений */
+.images-container {
+  margin-bottom: var(--spacing-lg);
+}
+
+.images-container h4 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-header);
+}
+
+/* Область загрузки изображений */
+.image-upload-container {
+  display: block;
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+}
+
+.image-upload-area {
+  width: 100%;
+  min-height: 200px;
+  border: 2px dashed rgba(218, 205, 190, 0.4);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  background-color: rgba(218, 205, 190, 0.05);
+  overflow: hidden;
+}
+
+.image-upload-area:hover {
+  border-color: #c0d2b6;
+  background-color: rgba(192, 210, 182, 0.05);
+}
+
+.image-upload-area.has-images {
+  border-style: solid;
+  border-color: #c0d2b6;
+  background-color: rgba(192, 210, 182, 0.05);
+  min-height: 60px;
+}
+
+.image-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+.image-upload-placeholder i {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-muted);
+  font-size: 2.5rem;
+}
+
+.image-upload-placeholder p {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-color);
+}
+
+.image-upload-placeholder span {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+}
+
+/* Индикатор количества загруженных фото и кнопка добавления */
+.uploaded-images-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm);
+  width: 100%;
+}
+
+.uploaded-images-count span {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: #8a7868;
+  background-color: rgba(218, 205, 190, 0.1);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+}
+
+.uploaded-images-count i {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  color: #f6f4f0;
+  background-color: #c0d2b6;
+  border-radius: var(--radius-full);
+  box-shadow: var(--button-shadow);
+}
+
+/* Старые стили для совместимости */
+.image-count-indicator {
+  display: none;
+}
+
+.image-preview-thumbnail {
+  display: none;
+}
+
+/* Сетка для превью изображений */
+.images-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+/* Контейнер для отдельного превью с кнопкой удаления */
+.image-preview-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%; /* Соотношение сторон 4:3 */
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid rgba(218, 205, 190, 0.2);
+  box-shadow: var(--card-shadow);
+  transition: var(--transition-normal);
+}
+
+.image-preview-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(218, 205, 190, 0.15);
+}
+
+.image-preview-container .image-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Кнопка удаления изображения */
+.remove-image-btn {
+  position: absolute;
+  top: var(--spacing-xs);
+  right: var(--spacing-xs);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background-color: rgba(201, 195, 192, 0.8);
+  color: #f6f4f0;
+  border: none;
+  font-size: var(--font-size-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  z-index: 2;
+}
+
+.remove-image-btn:hover {
+  background-color: #c9c3c0;
+  transform: scale(1.1);
+}
+
+/* Отметка основного изображения */
+.primary-image-indicator {
+  position: absolute;
+  top: var(--spacing-xs);
+  left: var(--spacing-xs);
+  background-color: rgba(201, 195, 192, 0.8);
+  color: #f6f4f0;
+  font-size: var(--font-size-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-medium);
+  z-index: 2;
+}
+
+/* Кнопка установки основного изображения */
+.set-primary-btn {
+  position: absolute;
+  bottom: var(--spacing-xs);
+  left: var(--spacing-xs);
+  right: var(--spacing-xs);
+  background-color: rgba(138, 120, 104, 0.8);
+  color: #f6f4f0;
+  border: none;
+  font-size: var(--font-size-xs);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  opacity: 0;
+  transform: translateY(5px);
+  z-index: 2;
+}
+
+.image-preview-container:hover .set-primary-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.set-primary-btn:hover {
+  background-color: #c9c3c0;
+}
+
+/* Контейнер с сохраненными изображениями */
+.existing-images-container {
+  margin-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--spacing-md);
+}
+
+.existing-images-container h4 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-header);
+}
+
+/* Скрытые элементы ввода */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Стили для формы аукциона */
+.auction-form .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.auction-form .form-group {
+  flex: 1;
+  min-width: 250px;
+}
+
+.auction-form label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 600; /* Более жирный шрифт */
+  color: #3a312a; /* Темнее цвет для лучшей читаемости */
+}
+
+.auction-form .form-control {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  background-color: rgba(218, 205, 190, 0.05);
+  border: 1px solid rgba(218, 205, 190, 0.2);
+  border-radius: var(--radius);
+  color: #463c35; /* Темнее цвет текста */
+  font-weight: 500; /* Делаем текст более жирным */
+  transition: var(--transition-normal);
+}
+
+/* Стили для плейсхолдеров в полях ввода */
+.auction-form .form-control::placeholder {
+  color: #716259;
+  opacity: 0.8;
+  font-weight: normal;
+}
+
+.auction-form .form-control:focus {
+  outline: none;
+  border-color: #c9c3c0;
+  box-shadow: 0 0 0 2px rgba(201, 195, 192, 0.2);
+}
+
+.auction-form .form-text {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+}
+
+.auction-form .timezone-info {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: #8a7868;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(218, 205, 190, 0.1);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid #c9c3c0;
+}
+
+.auction-form .timezone-info i {
+  color: #c9c3c0;
+}
+
+.auction-form .form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+}
+
+/* Стили для сообщений об ошибках */
+.auction-form .error-message {
+  color: #ac7689;
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+/* Валидация полей */
+.auction-form .form-control.is-invalid {
+  border-color: #ac7689;
+  box-shadow: 0 0 0 1px rgba(172, 118, 137, 0.2);
+}
+
+.auction-form .form-control.is-valid {
+  border-color: #c9c3c0;
+}
+
+/* Стили для модального окна подтверждения */
+.confirmation-modal {
+  background-color: var(--bg-color);
+  border-radius: var(--radius);
+  padding: var(--spacing-lg);
+  box-shadow: 0 8px 16px rgba(218, 205, 190, 0.15);
+  max-width: 500px;
+  margin: 0 auto;
+  border: 1px solid rgba(218, 205, 190, 0.2);
+}
+
+.confirmation-modal-title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  color: var(--text-header);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.confirmation-modal-content {
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-color);
+  text-align: center;
+}
+
+.confirmation-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+}

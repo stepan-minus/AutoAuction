@@ -1,0 +1,89 @@
+/* fonts.css - Типографика для проекта (не более 2-х шрифтов) */
+
+/* Импорт шрифтов при необходимости */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Шрифты - используем не более 2-х */
+  --font-primary: 'Montserrat', Arial, sans-serif; /* Для заголовков и акцентных элементов (как у кнопок входа и регистрации) */
+  --font-secondary: 'Open Sans', Helvetica, sans-serif; /* Для основного текста и полей ввода */
+  
+  /* Размеры шрифта */
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-md: 1.125rem;  /* 18px */
+  --font-size-lg: 1.25rem;   /* 20px */
+  --font-size-xl: 1.5rem;    /* 24px */
+  --font-size-2xl: 1.875rem; /* 30px */
+  --font-size-3xl: 2.25rem;  /* 36px */
+  
+  /* Толщина шрифта */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Высота строки */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* Межбуквенный интервал */
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+  --letter-spacing-wider: 0.05em;
+}
+
+/* Классы для использования текстовых стилей */
+
+/* Заголовки - используют шрифт как у кнопок */
+.text-heading {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--text-header);
+  line-height: var(--line-height-tight);
+}
+
+/* Основной текст - используется шрифт как у полей ввода */
+.text-body {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-color);
+  line-height: var(--line-height-normal);
+}
+
+/* Вспомогательный текст */
+.text-light {
+  color: var(--text-light);
+  font-weight: var(--font-weight-normal);
+}
+
+/* Акцентный текст */
+.text-accent {
+  color: var(--text-accent);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Приглушенный текст */
+.text-muted {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* Класс для текста на кнопках (как на скриншоте) */
+.text-button {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  text-transform: none;
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+/* Класс для текста в полях ввода (как на скриншоте) */
+.text-input {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-normal);
+}

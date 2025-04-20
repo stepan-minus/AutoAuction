@@ -1,0 +1,966 @@
+/* Стили для профиля пользователя с новой цветовой схемой */
+.profile-page {
+  background-color: #D2CECB;
+  padding: var(--spacing-md) 0;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+.profile-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  background-color: #f6f4f0;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+}
+
+.profile-header {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid rgba(218, 205, 190, 0.3);
+}
+
+.profile-header h1 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-2xl);
+  color: #8a7868;
+  margin-bottom: var(--spacing-sm);
+  text-align: center;
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  width: 100%;
+}
+
+.profile-form-container,
+.password-form-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  padding: var(--spacing-lg);
+  border: 1px solid rgba(218, 205, 190, 0.2);
+  position: relative;
+}
+
+.profile-form-container h2,
+.password-form-container h2 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  color: #8a7868;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  font-size: var(--font-size-xl);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid rgba(218, 205, 190, 0.3);
+}
+
+/* Специальные стили для формы изменения пароля */
+.password-form-container {
+  max-width: 600px;
+}
+
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.profile-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-main {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  padding: var(--spacing-lg);
+  border: 1px solid rgba(218, 205, 190, 0.2);
+}
+
+/* Стили для аватара пользователя */
+.avatar-upload-container {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: white;
+}
+
+.avatar-container:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.avatar-overlay i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.uploading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.uploading-overlay i {
+  font-size: 2rem;
+}
+
+.remove-avatar-button {
+  background-color: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.remove-avatar-button:hover {
+  color: var(--error-color);
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.remove-avatar-button i {
+  margin-right: 0.5rem;
+}
+
+.avatar-error {
+  color: var(--error-color);
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* Стили для списка карточек пользователя */
+.profile-cards {
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.profile-cards-title {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.profile-card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Стили для вкладок аукционов, истории и выигранных аукционов */
+.auctions-container,
+.history-container,
+.won-auctions-container,
+.my-auctions-container, 
+.auction-history-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  padding: var(--spacing-lg);
+  border: 1px solid rgba(218, 205, 190, 0.2);
+  position: relative;
+}
+
+/* Стили для карточек в профиле */
+.my-auctions-container .auction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
+.profile-auction-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-auction-card .auction-card-link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-auction-card .card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-auction-card .delete-button {
+  margin-top: var(--spacing-sm);
+  background-color: #f5e3e4;
+  color: #d64b4b;
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.profile-auction-card .delete-button:hover {
+  background-color: #f8d7d7;
+}
+
+.auctions-container h2,
+.history-container h2,
+.won-auctions-container h2,
+.my-auctions-container h2,
+.auction-history-container h2 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  color: #8a7868;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  font-size: var(--font-size-xl);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid rgba(218, 205, 190, 0.3);
+}
+
+.car-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  width: 100%;
+  margin-top: var(--spacing-lg);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin-top: var(--spacing-lg);
+}
+
+.history-item {
+  background-color: rgba(246, 244, 240, 0.8);
+  border-radius: var(--radius);
+  padding: var(--spacing-md);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  transition: var(--transition-normal);
+  border: 1px solid rgba(218, 205, 190, 0.2);
+}
+
+.history-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--hover-shadow);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  border-bottom: 1px solid rgba(218, 205, 190, 0.3);
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.history-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.history-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+  .history-item {
+    text-align: center;
+  }
+  
+  .history-header,
+  .history-details {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.history-car-image {
+  width: 100px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--card-shadow);
+}
+
+.history-car-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.history-car-title {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-md);
+  color: #483c32;
+}
+
+.history-car-price {
+  font-weight: var(--font-weight-medium);
+  color: #c0d2b6;
+  font-size: var(--font-size-base);
+}
+
+.history-car-date {
+  font-size: var(--font-size-sm);
+  color: #8a7868;
+}
+
+.no-auctions-message,
+.no-history-message,
+.no-won-auctions {
+  text-align: center;
+  padding: var(--spacing-2xl) var(--spacing-md);
+  background-color: rgba(246, 244, 240, 0.8);
+  border-radius: var(--radius);
+  color: #8a7868;
+  font-style: italic;
+  width: 100%;
+  border: 1px solid rgba(218, 205, 190, 0.3);
+  margin-top: var(--spacing-lg);
+}
+
+/* Стили для выигранных аукционов */
+.won-auctions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin-top: var(--spacing-lg);
+}
+
+.won-auction-item {
+  background-color: rgba(246, 244, 240, 0.8);
+  border-radius: var(--radius);
+  padding: var(--spacing-md);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  transition: var(--transition-normal);
+  border: 1px solid rgba(218, 205, 190, 0.2);
+}
+
+.won-auction-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--hover-shadow);
+}
+
+.auction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  border-bottom: 1px solid rgba(218, 205, 190, 0.3);
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.car-name a {
+  color: #8a7868;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: var(--transition-normal);
+}
+
+.car-name a:hover {
+  color: #c0d2b6;
+  text-decoration: underline;
+}
+
+.final-price {
+  font-weight: var(--font-weight-medium);
+  color: #ffffff;
+  font-size: var(--font-size-sm);
+  background-color: #c0d2b6;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--card-shadow);
+}
+
+.auction-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.end-date {
+  color: #8a7868;
+  font-size: var(--font-size-sm);
+}
+
+.auction-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.view-auction-link {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: #c0d2b6;
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-normal);
+  font-size: var(--font-size-sm);
+  box-shadow: var(--card-shadow);
+}
+
+.view-auction-link:hover {
+  background-color: #a3be8c;
+  transform: translateY(-2px);
+}
+
+.browse-auctions-link {
+  display: inline-block;
+  margin: var(--spacing-lg) auto 0;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  background-color: #c0d2b6;
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-normal);
+  text-align: center;
+  box-shadow: var(--card-shadow);
+}
+
+.browse-auctions-link:hover {
+  background-color: #a3be8c;
+  transform: translateY(-2px);
+}
+
+/* Общие стили профиля */
+.profile-username {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.profile-email {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.profile-stat-item {
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: var(--card-shadow);
+}
+
+.profile-stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.profile-stat-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Стили для форм профиля - соответствуют стилям AuctionForm */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-form-title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  color: #8a7868;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  font-size: var(--font-size-md);
+}
+
+/* Стили для секции аватара */
+.avatar-section {
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid rgba(218, 205, 190, 0.3);
+  text-align: center;
+}
+
+.avatar-section h3 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-md);
+  color: #8a7868;
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  color: #8a7868;
+}
+
+.form-group input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  background-color: rgba(218, 205, 190, 0.05);
+  border: 1px solid rgba(218, 205, 190, 0.2);
+  border-radius: var(--radius);
+  color: #483c32;
+  transition: var(--transition-normal);
+}
+
+/* Специальные стили для полей ввода в форме изменения пароля */
+.password-form .form-group input {
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
+  max-height: 40px;
+}
+
+/* Стили для кнопки и контейнера действий в форме изменения пароля */
+.password-form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+}
+
+.password-submit-button {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  background-color: #c0d2b6;
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  font-size: var(--font-size-sm);
+  box-shadow: var(--card-shadow);
+  min-width: 180px;
+}
+
+.password-submit-button:hover {
+  background-color: #a3be8c;
+  transform: translateY(-2px);
+}
+
+.password-submit-button:disabled {
+  background-color: rgba(192, 210, 182, 0.5);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #c0d2b6;
+  box-shadow: 0 0 0 2px rgba(192, 210, 182, 0.2);
+}
+
+.form-group input:disabled {
+  background-color: rgba(218, 205, 190, 0.1);
+  cursor: not-allowed;
+  color: #8a7868;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-xl);
+}
+
+.profile-actions button {
+  margin: 0 var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  background-color: #c0d2b6;
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.profile-actions button:hover {
+  background-color: #a3be8c;
+  transform: translateY(-2px);
+}
+
+.profile-actions button.cancel {
+  background-color: rgba(218, 205, 190, 0.3);
+  color: #8a7868;
+}
+
+.profile-actions button.cancel:hover {
+  background-color: rgba(218, 205, 190, 0.5);
+}
+
+/* Стили для вкладок профиля */
+.profile-tabs {
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: var(--spacing-sm);
+  padding: 0 0 var(--spacing-md);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+.profile-tab {
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: #8a7868;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-normal);
+  background-color: rgba(218, 205, 190, 0.1);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  justify-content: center;
+  border: 1px solid rgba(218, 205, 190, 0.3);
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: var(--card-shadow);
+}
+
+.profile-tab:hover {
+  background-color: rgba(218, 205, 190, 0.2);
+  transform: translateY(-2px);
+}
+
+.profile-tab.active {
+  color: #ffffff;
+  background-color: #c0d2b6;
+  border-color: #c0d2b6;
+  transform: translateY(-2px);
+}
+
+.profile-tab i {
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 768px) {
+  .profile-tabs {
+    justify-content: flex-start;
+    padding: 0 0 var(--spacing-md);
+  }
+  
+  .profile-tab {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+  
+  .profile-tab i {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Аватар для карточек */
+.seller-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.5rem;
+}
+
+.seller-profile {
+  display: flex;
+  align-items: center;
+}
+
+.seller-profile-link {
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.seller-profile-link:hover {
+  color: var(--primary-color);
+}
+
+/* Аватары в листинге */
+.auction-card-seller {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.auction-card-seller img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.5rem;
+}
+
+.auction-card-seller-name {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Стили для секции отзывов */
+.reviews-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+}
+
+.reviews-container h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.reviews-content {
+  width: 100%;
+}
+
+.reviews-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .reviews-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.review-item {
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+}
+
+.reviewer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer-name {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.review-date {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.review-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star {
+  color: #FFD700;
+  font-size: 1.2rem;
+}
+
+.review-content {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.review-content p {
+  margin: 0;
+}
+
+.review-auction-info {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border-color);
+  font-size: 0.9rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.review-auction-label {
+  color: var(--text-secondary);
+}
+
+.review-auction-name {
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.rating-value {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin-left: 0.5rem;
+}
+
+.no-reviews {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.no-reviews p {
+  margin: 0.5rem 0;
+  color: var(--text-light);
+}
+
+.no-reviews p.text-muted {
+  font-size: 0.9rem;
+  font-style: italic;
+}

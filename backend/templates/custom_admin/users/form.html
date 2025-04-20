@@ -1,0 +1,231 @@
+{% extends 'custom_admin/base/base.html' %}
+
+{% block title %}{% if is_create %}Создание нового пользователя{% else %}Редактирование пользователя{% endif %}{% endblock %}
+
+{% block page_title %}{% if is_create %}Создание нового пользователя{% else %}Редактирование пользователя{% endif %}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'custom_admin:admin_index' %}">Главная</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'custom_admin:user_list' %}">Пользователи</a></li>
+    {% if is_create %}
+        <li class="breadcrumb-item active">Создание нового пользователя</li>
+    {% else %}
+        <li class="breadcrumb-item"><a href="{% url 'custom_admin:user_detail' pk=user_obj.id %}">{{ user_obj.username }}</a></li>
+        <li class="breadcrumb-item active">Редактирование</li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">
+                {% if is_create %}
+                    Создание нового пользователя
+                {% else %}
+                    Редактирование пользователя: {{ user_obj.username }}
+                {% endif %}
+            </h5>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <!-- Основная информация пользователя -->
+                    <div class="col-md-6">
+                        <h4 class="mb-3">Основная информация</h4>
+                        
+                        <div class="mb-3">
+                            <label for="{{ user_form.username.id_for_label }}" class="form-label">Имя пользователя</label>
+                            {{ user_form.username }}
+                            {% if user_form.username.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.username.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ user_form.email.id_for_label }}" class="form-label">Email</label>
+                            {{ user_form.email }}
+                            {% if user_form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.email.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ user_form.first_name.id_for_label }}" class="form-label">Имя</label>
+                            {{ user_form.first_name }}
+                            {% if user_form.first_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.first_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ user_form.last_name.id_for_label }}" class="form-label">Фамилия</label>
+                            {{ user_form.last_name }}
+                            {% if user_form.last_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.last_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ user_form.password.id_for_label }}" class="form-label">Пароль</label>
+                            {{ user_form.password }}
+                            {% if user_form.password.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.password.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if not is_create %}
+                                <div class="form-text">Оставьте пустым, если не хотите менять пароль</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ user_form.confirm_password.id_for_label }}" class="form-label">Подтверждение пароля</label>
+                            {{ user_form.confirm_password }}
+                            {% if user_form.confirm_password.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.confirm_password.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                {{ user_form.is_active }}
+                                <label class="form-check-label" for="{{ user_form.is_active.id_for_label }}">Активный пользователь</label>
+                            </div>
+                            {% if user_form.is_active.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.is_active.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                {{ user_form.is_staff }}
+                                <label class="form-check-label" for="{{ user_form.is_staff.id_for_label }}">Администратор</label>
+                            </div>
+                            {% if user_form.is_staff.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.is_staff.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                {{ user_form.is_email_verified }}
+                                <label class="form-check-label" for="{{ user_form.is_email_verified.id_for_label }}">Email подтвержден</label>
+                            </div>
+                            {% if user_form.is_email_verified.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.is_email_verified.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Информация профиля -->
+                    <div class="col-md-6">
+                        <h4 class="mb-3">Профиль</h4>
+                        
+                        <div class="mb-3">
+                            <label for="{{ profile_form.avatar.id_for_label }}" class="form-label">Аватар</label>
+                            {{ profile_form.avatar }}
+                            {% if profile_form.avatar.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in profile_form.avatar.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if not is_create and user_obj.profile.avatar %}
+                                <div class="mt-2">
+                                    <img src="{{ user_obj.profile.avatar.url }}" alt="Текущий аватар" class="img-thumbnail" style="max-height: 100px;">
+                                    <div class="form-text">Текущий аватар</div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ profile_form.phone.id_for_label }}" class="form-label">Телефон</label>
+                            {{ profile_form.phone }}
+                            {% if profile_form.phone.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in profile_form.phone.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ profile_form.bio.id_for_label }}" class="form-label">О себе</label>
+                            {{ profile_form.bio }}
+                            {% if profile_form.bio.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in profile_form.bio.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                {% if user_form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in user_form.non_field_errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                {% if profile_form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in profile_form.non_field_errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% if is_create %}{% url 'custom_admin:user_list' %}{% else %}{% url 'custom_admin:user_detail' pk=user_obj.id %}{% endif %}" class="btn btn-secondary">
+                        Отмена
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        {% if is_create %}Создать пользователя{% else %}Сохранить изменения{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

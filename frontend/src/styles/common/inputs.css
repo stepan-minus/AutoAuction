@@ -1,0 +1,132 @@
+/* inputs.css - Стили для полей ввода */
+
+/* Основные стили для всех полей ввода */
+.input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--color-dark);
+  background-color: var(--color-muted);
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  transition: var(--transition-normal);
+  appearance: none;
+  box-shadow: var(--input-shadow);
+}
+
+/* Стиль плейсхолдера как на скриншоте */
+.input::placeholder,
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  opacity: 1;
+  font-family: var(--font-secondary);
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
+/* Фокус на полях ввода */
+.input:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: rgba(var(--color-accent-rgb), 0.5);
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.15);
+  background-color: var(--color-muted);
+}
+
+/* Отключенные поля ввода */
+.input:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled,
+.input.disabled,
+input.disabled,
+textarea.disabled,
+select.disabled {
+  background-color: rgba(var(--color-muted-rgb), 0.7);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Поля только для чтения */
+.input.readonly,
+input.readonly,
+textarea.readonly,
+input[readonly],
+textarea[readonly] {
+  background-color: rgba(var(--color-muted-rgb), 0.5);
+  cursor: default;
+}
+
+/* Валидация полей ввода */
+.input.is-valid,
+input.is-valid,
+textarea.is-valid,
+select.is-valid {
+  border-color: var(--success-color);
+}
+
+.input.is-invalid,
+input.is-invalid,
+textarea.is-invalid,
+select.is-invalid {
+  border-color: var(--danger-color);
+}
+
+/* Текст ошибки под полем ввода */
+.input-error {
+  color: var(--danger-color);
+  font-size: var(--font-size-sm);
+  margin-top: 0.25rem;
+}
+
+/* Группа полей ввода */
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Лейблы для полей ввода */
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-header);
+  font-size: var(--font-size-sm);
+}
+
+/* Группа формы с лейблом и полем ввода */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+/* Вспомогательный текст под полем ввода */
+.input-help {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+}

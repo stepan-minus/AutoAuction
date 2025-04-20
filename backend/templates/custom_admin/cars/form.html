@@ -1,0 +1,212 @@
+{% extends 'custom_admin/base/base.html' %}
+
+{% block title %}{% if is_create %}Создание нового лота{% else %}Редактирование лота{% endif %}{% endblock %}
+
+{% block page_title %}{% if is_create %}Создание нового лота{% else %}Редактирование лота{% endif %}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'custom_admin:admin_index' %}">Главная</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'custom_admin:car_list' %}">Лоты</a></li>
+    {% if is_create %}
+        <li class="breadcrumb-item active">Создание нового лота</li>
+    {% else %}
+        <li class="breadcrumb-item"><a href="{% url 'custom_admin:car_detail' pk=car.id %}">{{ car.brand }} {{ car.model }}</a></li>
+        <li class="breadcrumb-item active">Редактирование</li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">
+                {% if is_create %}
+                    Создание нового лота
+                {% else %}
+                    Редактирование лота: {{ car.brand }} {{ car.model }}
+                {% endif %}
+            </h5>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.seller.id_for_label }}" class="form-label">{{ form.seller.label }}</label>
+                            {{ form.seller }}
+                            {% if form.seller.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.seller.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }}</label>
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.status.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="{{ form.brand.id_for_label }}" class="form-label">Марка</label>
+                            {{ form.brand }}
+                            {% if form.brand.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.brand.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="{{ form.model.id_for_label }}" class="form-label">Модель</label>
+                            {{ form.model }}
+                            {% if form.model.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.model.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="{{ form.year.id_for_label }}" class="form-label">Год выпуска</label>
+                            {{ form.year }}
+                            {% if form.year.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.year.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="{{ form.mileage.id_for_label }}" class="form-label">Пробег (км)</label>
+                            {{ form.mileage }}
+                            {% if form.mileage.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.mileage.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="{{ form.starting_price.id_for_label }}" class="form-label">Начальная цена (₽)</label>
+                            {{ form.starting_price }}
+                            {% if form.starting_price.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.starting_price.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="{{ form.min_bid_increment.id_for_label }}" class="form-label">Минимальный шаг ставки (₽)</label>
+                            {{ form.min_bid_increment }}
+                            {% if form.min_bid_increment.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.min_bid_increment.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">Описание</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.description.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.end_time.id_for_label }}" class="form-label">Дата и время окончания</label>
+                            {{ form.end_time }}
+                            {% if form.end_time.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.end_time.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.image.id_for_label }}" class="form-label">Основное изображение</label>
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.image.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if car and car.image %}
+                                <div class="mt-2">
+                                    <img src="{{ car.image.url }}" alt="Текущее изображение" class="img-thumbnail" style="max-height: 100px;">
+                                    <div class="form-text">Текущее изображение</div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div class="d-flex justify-content-between">
+                    <a href="{% if is_create %}{% url 'custom_admin:car_list' %}{% else %}{% url 'custom_admin:car_detail' pk=car.id %}{% endif %}" class="btn btn-secondary">
+                        Отмена
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        {% if is_create %}Создать лот{% else %}Сохранить изменения{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

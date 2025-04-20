@@ -1,0 +1,11 @@
+/* Pages Styles Index */
+
+/* Import page styles */
+@import './auth-page.css';
+@import './home-page.css';
+@import './auction-page.css';
+@import './profile-page.css';
+@import './seller-profile-page.css';
+@import './error-page.css';
+@import './chat-page.css';
+@import './success-page.css';

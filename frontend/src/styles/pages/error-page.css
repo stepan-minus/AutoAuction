@@ -1,0 +1,166 @@
+/* Стили для страницы ошибки */
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  background-image: url('/images/sports-car-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  font-family: var(--font-secondary);
+  text-align: center;
+}
+
+.error-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(246, 244, 240, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+.error-container {
+  width: 100%;
+  max-width: 550px;
+  padding: 2.5rem;
+  background-color: rgba(246, 244, 240, 0.9);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(218, 205, 190, 0.3);
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px);
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-container h2 {
+  color: #8a7868;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.error-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: #ac7689;
+  border-radius: var(--radius-full);
+}
+
+.error-container p {
+  color: #8a7868;
+  font-size: var(--font-size-base);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.error-container .auth-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.error-container .auth-message {
+  color: #8a7868;
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.error-container .auth-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.error-container .auth-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.error-container .login-button {
+  background-color: #c0d2b6;
+  color: white;
+}
+
+.error-container .login-button:hover {
+  background-color: #a5b99b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(192, 210, 182, 0.25);
+}
+
+.error-container .register-button {
+  background-color: #8a7868;
+  color: white;
+}
+
+.error-container .register-button:hover {
+  background-color: #796959;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(138, 120, 104, 0.25);
+}
+
+.error-container .back-button {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background-color: transparent;
+  color: #8a7868;
+  border: 1px solid #8a7868;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.error-container .back-button:hover {
+  background-color: rgba(138, 120, 104, 0.1);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 576px) {
+  .error-container {
+    padding: 1.5rem;
+  }
+  
+  .error-container .auth-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .error-container .auth-button,
+  .error-container .back-button {
+    width: 100%;
+  }
+}

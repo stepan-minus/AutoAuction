@@ -1,0 +1,209 @@
+/* Стили для страниц авторизации */
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  background-image: url('/images/sports-car-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  font-family: var(--font-secondary);
+}
+
+.auth-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(246, 244, 240, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 2.5rem;
+  background-color: rgba(246, 244, 240, 0.9);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(218, 205, 190, 0.3);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px);
+}
+
+.auth-container h1 {
+  color: #8a7868;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.auth-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.auth-form label {
+  font-weight: var(--font-weight-medium);
+  margin-bottom: 0.5rem;
+  color: #8a7868;
+  font-size: var(--font-size-sm);
+}
+
+.auth-form input {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  background-color: #c0d2b6;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: #c0d2b6;
+  box-shadow: 0 0 0 3px rgba(192, 210, 182, 0.15);
+}
+
+.auth-form input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.auth-form button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #c0d2b6;
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.auth-form button:hover {
+  background-color: #a5b99b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(192, 210, 182, 0.25);
+}
+
+.auth-form button:disabled {
+  background-color: rgba(192, 210, 182, 0.7);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.auth-links {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.auth-links p {
+  color: #8a7868;
+  font-size: var(--font-size-sm);
+}
+
+.auth-links a {
+  color: #c0d2b6;
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: all 0.2s ease;
+}
+
+.auth-links a:hover {
+  color: #a5b99b;
+  text-decoration: underline;
+}
+
+.error-message {
+  background-color: rgba(172, 118, 137, 0.1);
+  border: 1px solid rgba(172, 118, 137, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  color: #ac7689;
+  font-size: var(--font-size-sm);
+  margin-top: 0.25rem;
+}
+
+.general-error {
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  background-color: rgba(192, 210, 182, 0.1);
+  border: 1px solid rgba(192, 210, 182, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  color: #8a7868;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.reset-form h2 {
+  color: #8a7868;
+  font-size: var(--font-size-xl);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.reset-instructions {
+  color: #8a7868;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: var(--font-size-base);
+}
+
+.auth-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #c0d2b6;
+  color: white;
+  border-radius: var(--radius-sm);
+  margin-top: 1rem;
+  font-size: var(--font-size-sm);
+  transition: all 0.2s ease;
+}
+
+.auth-button:hover {
+  background-color: #a5b99b;
+  transform: translateY(-2px);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 576px) {
+  .auth-container {
+    padding: 1.5rem;
+  }
+  
+  .auth-form input,
+  .auth-form button {
+    padding: 0.6rem 0.8rem;
+  }
+}

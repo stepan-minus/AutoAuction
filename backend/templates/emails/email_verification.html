@@ -1,0 +1,20 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Подтверждение email - Auto Auction{% endblock %}
+
+{% block content %}
+<h2>Здравствуйте, {{ username }}!</h2>
+
+<p>Для подтверждения вашего email на сайте Auto Auction используйте следующий код:</p>
+
+<div class="verification-code">{{ verification_code }}</div>
+
+<p>Код действителен в течение <span class="highlight">10 минут</span>.</p>
+
+<p>Если вы не запрашивали этот код, проигнорируйте данное сообщение.</p>
+
+<p>
+    С уважением,<br>
+    Команда Auto Auction
+</p>
+{% endblock %}

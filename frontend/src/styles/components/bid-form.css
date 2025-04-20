@@ -1,0 +1,310 @@
+/* Стили для формы размещения ставок с новой цветовой схемой */
+
+.bid-form-container {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: rgba(var(--color-light-rgb), 0.05);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
+  transition: var(--transition-normal);
+}
+
+.bid-form-container:hover {
+  box-shadow: var(--hover-shadow);
+}
+
+.bid-form-title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  color: var(--text-header);
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Информация о текущей цене и минимальном шаге */
+.current-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm);
+  background-color: rgba(var(--color-accent-rgb), 0.08);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.15);
+}
+
+.current-price, .min-increment {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+  margin-bottom: var(--spacing-xs);
+  font-family: var(--font-secondary);
+}
+
+.price-value {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  font-family: var(--font-primary);
+}
+
+/* Кнопки быстрых ставок */
+.quick-bid-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.quick-bid-button {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-medium);
+  background-color: rgba(var(--color-neutral-rgb), 0.1);
+  color: var(--color-neutral);
+  border: 1px solid rgba(var(--color-neutral-rgb), 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.quick-bid-button:hover {
+  background-color: var(--color-accent);
+  color: var(--text-on-accent);
+  border-color: var(--color-accent);
+}
+
+.quick-bid-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--color-accent-rgb), 0.2);
+}
+
+/* Форма для ввода ставки */
+.bid-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-primary);
+}
+
+.bid-input-wrapper {
+  position: relative;
+}
+
+.currency-symbol {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+.bid-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
+  font-family: var(--font-secondary);
+  color: var(--text-color);
+  background-color: #f6f4f0;
+  transition: var(--transition-normal);
+  height: 36px;
+}
+
+.bid-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px rgba(var(--color-accent-rgb), 0.15);
+  background-color: #fff;
+}
+
+.bid-input:disabled {
+  background-color: rgba(var(--color-dark-rgb), 0.05);
+  color: var(--text-light);
+  cursor: not-allowed;
+}
+
+/* Кнопка отправки ставки */
+.submit-bid-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-accent);
+  color: var(--text-on-accent);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  text-align: center;
+  box-shadow: var(--button-shadow);
+  min-height: 44px;
+}
+
+.submit-bid-button:hover {
+  background-color: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--hover-shadow);
+}
+
+.submit-bid-button:active {
+  transform: translateY(0);
+  box-shadow: var(--button-shadow);
+}
+
+.submit-bid-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.4);
+}
+
+.submit-bid-button:disabled {
+  background-color: var(--color-muted);
+  color: var(--text-light);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+/* Сообщения об ошибке */
+.bid-error {
+  margin: var(--spacing-sm) 0 var(--spacing-md);
+  padding: var(--spacing-sm);
+  color: var(--danger-color);
+  background-color: rgba(var(--danger-color-rgb), 0.1);
+  border: 1px solid rgba(var(--danger-color-rgb), 0.2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-secondary);
+}
+
+/* Сообщение об успешной ставке */
+.bid-success {
+  margin: var(--spacing-sm) 0 var(--spacing-md);
+  padding: var(--spacing-sm);
+  color: var(--success-color);
+  background-color: rgba(var(--success-color-rgb), 0.1);
+  border: 1px solid rgba(var(--success-color-rgb), 0.2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-secondary);
+  animation: fadeInOut 5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}
+
+/* Сообщение о неактивном аукционе */
+.bid-form-inactive {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: rgba(var(--color-light-rgb), 0.05);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  box-shadow: var(--card-shadow);
+}
+
+.auction-status-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.auction-status-icon {
+  font-size: 2rem;
+  color: var(--color-muted);
+  margin-bottom: var(--spacing-xs);
+}
+
+.auction-not-active {
+  margin: 0;
+  color: var(--text-light);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-secondary);
+}
+
+.auction-winner {
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-md);
+  background-color: rgba(var(--color-accent-rgb), 0.1);
+  border-radius: var(--radius);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.2);
+  text-align: center;
+}
+
+.winner-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.winner-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-xs);
+}
+
+.winner-bid {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .bid-form-container {
+    padding: var(--spacing-md);
+  }
+  
+  .current-info {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .bid-input {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-sm);
+  }
+  
+  .quick-bid-options {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .bid-form-container {
+    padding: var(--spacing-sm);
+  }
+  
+  .submit-bid-button {
+    width: 100%;
+  }
+}

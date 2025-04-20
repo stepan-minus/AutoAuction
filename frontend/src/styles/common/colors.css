@@ -1,0 +1,83 @@
+/* colors.css - Общие цвета для проекта */
+
+:root {
+  /* Основные цвета */
+  --color-dark: #8a7868; /* Мягкий коричневый - основной текст и заголовки */
+  --color-accent: #9D8A80; /* Теплый бежевый - акценты, кнопки */
+  --color-neutral: #766C63; /* Средний коричневый - вторичный текст */
+  --color-light: #F6F4F0; /* Светлый кремовый - фоны, карточки */
+  --color-muted: #E5E0D9; /* Светлый бежевый - границы, разделители */
+  
+  /* RGB представления для теней и градиентов */
+  --color-dark-rgb: 138, 120, 104;
+  --color-accent-rgb: 157, 138, 128;
+  --color-neutral-rgb: 118, 108, 99;
+  --color-light-rgb: 246, 244, 240;
+  --color-muted-rgb: 229, 224, 217;
+
+  /* Производные оттенки для эффектов и состояний */
+  --accent-light: #c5b5ad; /* Светлее основного акцентного */
+  --accent-dark: #8c7c72;  /* Темнее основного акцентного */
+  --neutral-light: #8c8378; /* Светлее нейтрального */
+  --neutral-dark: #635a52;  /* Темнее нейтрального */
+  --light-accent: rgba(var(--color-accent-rgb), 0.15); /* Прозрачный акцентный для фонов */
+
+  /* Фоновые цвета */
+  --bg-color: var(--color-light); /* Основной фон страницы */
+  --bg-light: #ffffff; /* Белый для элементов переднего плана */
+  --bg-dark: var(--color-muted); /* Для разделения контента */
+  --bg-accent: var(--color-accent); /* Для акцентных элементов, кнопок */
+  --bg-neutral: var(--color-neutral); /* Для нейтральных элементов */
+
+  /* Текстовые цвета */
+  --text-color: var(--color-dark); /* Основной текст */
+  --text-light: var(--color-neutral); /* Вторичный, более светлый текст */
+  --text-header: var(--color-dark); /* Заголовки */
+  --text-accent: var(--color-accent); /* Акцентный текст */
+  --text-on-accent: var(--bg-light); /* Текст на акцентном фоне */
+  --text-on-neutral: var(--bg-light); /* Текст на нейтральном фоне */
+  --text-muted: rgba(var(--color-neutral-rgb), 0.7); /* Приглушенный текст */
+  
+  /* Границы */
+  --border-color: var(--color-muted); /* Основной цвет границ */
+  --border-light: rgba(var(--color-muted-rgb), 0.5); /* Светлые границы */
+  --border-accent: rgba(var(--color-accent-rgb), 0.3); /* Акцентные границы */
+  
+  /* Функциональные цвета */
+  --success-color: #a6b89b; /* Нейтральный для успеха */
+  --warning-color: #e0c896; /* Акцентный для предупреждений */
+  --danger-color: #d4a59a; /* Для ошибок */
+  --info-color: #9bb0c9; /* Для информации */
+  
+  /* Тени и эффекты */
+  --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
+  --hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.09);
+  --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  --button-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  --input-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+  
+  /* Размеры и отступы */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem;  /* 8px */
+  --spacing-md: 1rem;    /* 16px */
+  --spacing-lg: 1.5rem;  /* 24px */
+  --spacing-xl: 2rem;    /* 32px */
+  
+  /* Радиусы - элегантные углы */
+  --radius: 8px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 50%;
+  
+  /* Переходы и анимации */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Z-индексы для правильного наложения элементов */
+  --z-index-dropdown: 90;
+  --z-index-sticky: 100;
+  --z-index-modal: 1000;
+  --z-index-tooltip: 1100;
+}

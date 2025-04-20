@@ -1,0 +1,252 @@
+Content-Type: multipart/alternative;
+ boundary="===============8540381067990587391=="
+MIME-Version: 1.0
+Subject: =?utf-8?b?0KHQsdGA0L7RgSDQv9Cw0YDQvtC70Y8=?=
+From: carauction228@gmail.com
+To: disonem204@isorax.com
+Date: Sun, 30 Mar 2025 16:44:25 -0000
+Message-ID: <174335306543.8066.13122957603049863518@f2343dae3b82>
+
+--===============8540381067990587391==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+
+
+
+    
+    
+    Сброс пароля - АвтоАукцион
+    
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            background-color: #0069d9;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+            margin: 20px 0;
+        }
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    
+
+
+    
+        
+            АвтоАукцион
+        
+        
+        
+            
+Сброс пароля
+
+Здравствуйте, niger!
+
+Мы получили запрос на сброс пароля для вашей учетной записи на платформе "АвтоАукцион". Если вы не запрашивали сброс пароля, пожалуйста, проигнорируйте это письмо.
+
+
+    Для сброса пароля, нажмите на кнопку ниже:
+    
+        Сбросить пароль
+    
+    Если кнопка не работает, скопируйте и вставьте следующую ссылку в адресную строку браузера:
+    http://0.0.0.0:5001/reset-password?token=test_token_password_12345
+
+
+Ссылка действительна в течение 1 часа. Если срок действия ссылки истек, вы можете запросить новую ссылку для сброса пароля на странице входа.
+
+С уважением,
+Команда АвтоАукцион
+
+        
+        
+        
+            © 2025 АвтоАукцион. Все права защищены.
+            Если вы не запрашивали это письмо, пожалуйста, проигнорируйте его.
+        
+    
+
+
+--===============8540381067990587391==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сброс пароля - АвтоАукцион</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            background-color: #0069d9;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+            margin: 20px 0;
+        }
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>АвтоАукцион</h1>
+        </div>
+        
+        <div class="content">
+            
+<h1>Сброс пароля</h1>
+
+<p>Здравствуйте, niger!</p>
+
+<p>Мы получили запрос на сброс пароля для вашей учетной записи на платформе "АвтоАукцион". Если вы не запрашивали сброс пароля, пожалуйста, проигнорируйте это письмо.</p>
+
+<div class="highlight">
+    <p>Для сброса пароля, нажмите на кнопку ниже:</p>
+    <div style="text-align: center;">
+        <a href="http://0.0.0.0:5001/reset-password?token=test_token_password_12345" class="btn" target="_blank">Сбросить пароль</a>
+    </div>
+    <p style="margin-top: 15px; font-size: 12px;">Если кнопка не работает, скопируйте и вставьте следующую ссылку в адресную строку браузера:</p>
+    <p style="font-size: 12px; word-break: break-all;">http://0.0.0.0:5001/reset-password?token=test_token_password_12345</p>
+</div>
+
+<p>Ссылка действительна в течение 1 часа. Если срок действия ссылки истек, вы можете запросить новую ссылку для сброса пароля на странице входа.</p>
+
+<p>С уважением,<br>
+Команда АвтоАукцион</p>
+
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 АвтоАукцион. Все права защищены.</p>
+            <p>Если вы не запрашивали это письмо, пожалуйста, проигнорируйте его.</p>
+        </div>
+    </div>
+</body>
+</html>
+--===============8540381067990587391==--
+
+-------------------------------------------------------------------------------

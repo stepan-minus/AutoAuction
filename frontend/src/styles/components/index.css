@@ -1,0 +1,13 @@
+/* Component Styles Index */
+
+/* Import component styles */
+@import './navbar.css';
+@import './footer.css';
+@import './auction-card.css';
+@import './auction-form.css';
+@import './image-gallery.css';
+@import './bid-form.css';
+@import './notifications.css';
+@import './timer.css';
+@import './EmailVerification.css';
+@import './RegistrationSuccess.css';

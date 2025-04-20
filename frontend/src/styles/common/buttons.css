@@ -1,0 +1,177 @@
+/* buttons.css - Стили кнопок (варианты для входа и регистрации как на скриншоте) */
+
+/* Базовые стили для всех кнопок */
+.btn,
+.button,
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  min-height: 44px;
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  color: var(--text-on-accent);
+  background-color: var(--color-accent);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  box-shadow: var(--button-shadow);
+  text-decoration: none;
+  text-align: center;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* Эффекты при наведении */
+.btn:hover,
+.button:hover,
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background-color: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--hover-shadow);
+}
+
+/* Эффекты при фокусе */
+.btn:focus,
+.button:focus,
+button:focus,
+input[type="button"]:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.4);
+}
+
+/* Эффекты при активации */
+.btn:active,
+.button:active,
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
+  transform: translateY(0);
+  box-shadow: var(--button-shadow);
+}
+
+/* Отключенные кнопки */
+.btn:disabled,
+.button:disabled,
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled {
+  background-color: var(--color-muted);
+  color: rgba(var(--color-dark-rgb), 0.6);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+/* === Варианты кнопок === */
+
+/* Кнопка "Вход" - светлая с контуром (как на скриншоте) */
+.btn-login,
+.login-button {
+  background-color: transparent;
+  color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+  padding: 0.5rem 1.5rem;
+  min-height: 36px;
+  border-radius: var(--radius);
+  font-weight: var(--font-weight-medium);
+  box-shadow: none;
+}
+
+.btn-login:hover,
+.login-button:hover {
+  background-color: rgba(var(--color-dark-rgb), 0.05);
+  color: var(--color-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Кнопка "Регистрация" - заполненная (как на скриншоте) */
+.btn-register,
+.register-button {
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  min-height: 36px;
+  border-radius: var(--radius);
+  font-weight: var(--font-weight-medium);
+}
+
+.btn-register:hover,
+.register-button:hover {
+  background-color: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(var(--color-accent-rgb), 0.2);
+}
+
+/* === Размеры кнопок === */
+
+/* Маленькая кнопка (как на скриншоте) */
+.btn-sm,
+.small-button {
+  padding: 0.5rem 1rem;
+  min-height: 36px;
+  font-size: var(--font-size-sm);
+}
+
+/* Средняя кнопка (по умолчанию) */
+.btn-md,
+.medium-button {
+  padding: 0.75rem 1.5rem;
+  min-height: 44px;
+  font-size: var(--font-size-base);
+}
+
+/* Большая кнопка */
+.btn-lg,
+.large-button {
+  padding: 1rem 2rem;
+  min-height: 52px;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Кнопка на всю ширину */
+.btn-block,
+.full-width-button {
+  display: flex;
+  width: 100%;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* === Кнопки с иконками === */
+
+/* Кнопка с иконкой */
+.btn-icon,
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.btn-icon i, 
+.btn-icon svg,
+.icon-button i, 
+.icon-button svg {
+  font-size: 1.2em;
+}
+
+/* Иконка слева */
+.btn-icon-left i,
+.btn-icon-left svg {
+  order: -1;
+}
