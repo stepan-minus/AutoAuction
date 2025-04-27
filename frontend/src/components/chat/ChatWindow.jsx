@@ -78,15 +78,66 @@ const ChatWindow = ({ conversation, onUpdate, user }) => {
           if (data.type === 'message') {
             console.log('Получено новое сообщение через WebSocket:', data.message);
             
+            // Проверяем, для текущего ли пользователя это сообщение
+            const receiverId = data.message.receiver_id;
+            const isOwn = data.message.is_own;
+            
+            // Бэкенд теперь добавляет receiver_id и is_own, чтобы избежать путаницы
+            if (receiverId !== user.id) {
+              console.log(`Это сообщение для другого пользователя (${receiverId}), игнорируем`);
+              return;
+            }
+            
             // Обновляем диалог при получении нового сообщения
             setChatData(prev => {
               if (!prev) return prev;
               
-              // Проверяем, не дублируется ли сообщение
-              const messageExists = prev.messages.some(msg => msg.id === data.message.id);
-              if (messageExists) {
+              // Создаем Map для быстрого поиска дубликатов
+              const messageMap = new Map();
+              const tempMessages = [];
+              
+              prev.messages.forEach(msg => {
+                // Отдельно обрабатываем временные сообщения, которые могут быть заменены
+                if (msg.isTemp) {
+                  // Проверяем, не соответствует ли временное сообщение полученному от сервера
+                  if (msg.content === data.message.content && 
+                      msg.sender?.id === data.message.sender?.id) {
+                    // Запоминаем все временные сообщения для возможной замены
+                    tempMessages.push(msg);
+                  }
+                  // Не добавляем временные сообщения в map проверки дубликатов
+                } else {
+                  // Добавляем только постоянные сообщения
+                  messageMap.set(msg.id, true);
+                }
+              });
+              
+              // Проверяем, не дублируется ли основное сообщение
+              if (messageMap.has(data.message.id)) {
                 console.log('Сообщение уже существует в диалоге, игнорируем:', data.message.id);
                 return prev;
+              }
+              
+              // Удаляем служебные поля перед добавлением в список
+              const { receiver_id, is_own, ...messageWithoutServiceFields } = data.message;
+              
+              // Если у нас есть временные сообщения, заменяем первое из них
+              if (tempMessages.length > 0) {
+                console.log('Заменяем временное сообщение с ID:', tempMessages[0].id);
+                
+                return {
+                  ...prev,
+                  messages: prev.messages.map(msg => {
+                    // Заменяем только первое совпадающее временное сообщение
+                    if (msg.id === tempMessages[0].id) {
+                      return {
+                        ...messageWithoutServiceFields,
+                        isTemp: false
+                      };
+                    }
+                    return msg;
+                  })
+                };
               }
               
               console.log('Добавляем новое входящее сообщение в диалог:', data.message);
@@ -94,7 +145,7 @@ const ChatWindow = ({ conversation, onUpdate, user }) => {
               // Добавляем новое сообщение в список
               return {
                 ...prev,
-                messages: [...prev.messages, data.message]
+                messages: [...prev.messages, messageWithoutServiceFields]
               };
             });
             
@@ -113,8 +164,12 @@ const ChatWindow = ({ conversation, onUpdate, user }) => {
                 if (msg.isTemp && msg.content === data.message.content && 
                     msg.sender.id === data.message.sender.id) {
                   console.log('Заменяем временное сообщение на подтвержденное:', msg.id, '->', data.message.id);
+                  
+                  // Удаляем служебные поля перед заменой
+                  const { receiver_id, is_own, ...messageWithoutServiceFields } = data.message;
+                  
                   return {
-                    ...data.message,
+                    ...messageWithoutServiceFields,
                     isTemp: false
                   };
                 }
@@ -159,7 +214,6 @@ const ChatWindow = ({ conversation, onUpdate, user }) => {
     try {
       // Генерируем временный ID для сообщения
       const tempId = `temp_${Date.now()}`;
-      let messageAdded = false;
       
       // Создаем временный объект сообщения для быстрого отображения в UI
       const tempMessage = {
@@ -169,7 +223,8 @@ const ChatWindow = ({ conversation, onUpdate, user }) => {
         content: content,
         timestamp: new Date().toISOString(),
         is_read: false,
-        isTemp: true // Флаг для идентификации временного сообщения
+        isTemp: true, // Флаг для идентификации временного сообщения
+        server_id: null // Используем для отслеживания полученного от сервера ID
       };
       
       // Добавляем временное сообщение в UI немедленно
@@ -180,7 +235,6 @@ const ChatWindow = ({ conversation, onUpdate, user }) => {
           messages: [...prev.messages, tempMessage]
         };
       });
-      messageAdded = true;
       
       // Попытка отправки через WebSocket
       let wsSuccess = false;
@@ -194,40 +248,58 @@ const ChatWindow = ({ conversation, onUpdate, user }) => {
         
         if (wsSuccess) {
           console.log('Сообщение успешно отправлено через WebSocket');
-          // После успешной отправки через WebSocket ждем 2 секунды для получения обновления
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          // Не ждем, т.к. обновление придет через WebSocket
         }
       }
       
       // Если WebSocket не доступен или отправка не удалась, используем HTTP
-      let response;
       if (!wsSuccess) {
         console.log('Отправка через HTTP как запасной вариант:', content);
-        response = await chatService.sendMessageHttp(chatData.id, content);
+        const response = await chatService.sendMessageHttp(chatData.id, content);
         console.log('Ответ от HTTP запроса:', response);
         
-        // Заменяем временное сообщение на реальное
-        if (messageAdded) {
-          setChatData(prev => {
-            if (!prev) return prev;
-            
-            // Находим и заменяем временное сообщение
-            const updatedMessages = prev.messages.map(msg => {
-              if (msg.id === tempId) {
-                return {
-                  ...response, // Используем данные из ответа сервера
-                  sender: user // Сохраняем информацию о отправителе
-                };
-              }
-              return msg;
-            });
-            
+        // Создаем Map текущих сообщений для быстрого поиска дубликатов
+        const messageMap = new Map();
+        
+        // Заменяем временное сообщение на реальное и удаляем дубликаты
+        setChatData(prev => {
+          if (!prev) return prev;
+          
+          // Получаем текущие сообщения и заполняем Map
+          const currentMessages = [...prev.messages];
+          currentMessages.forEach(msg => {
+            if (!msg.isTemp) {
+              messageMap.set(msg.id, true);
+            }
+          });
+          
+          // Проверяем, не пришло ли это сообщение уже через WebSocket
+          if (messageMap.has(response.id)) {
+            console.log('Сообщение уже получено через WebSocket, удаляем только временное:', tempId);
+            // Удаляем только временное сообщение
             return {
               ...prev,
-              messages: updatedMessages
+              messages: currentMessages.filter(msg => msg.id !== tempId)
             };
+          }
+          
+          // Если это новое сообщение, заменяем временное на реальное
+          const updatedMessages = currentMessages.map(msg => {
+            if (msg.id === tempId) {
+              return {
+                ...response, // Используем данные из ответа сервера
+                sender: user, // Сохраняем информацию о отправителе
+                server_id: response.id // Запоминаем ID от сервера
+              };
+            }
+            return msg;
           });
-        }
+          
+          return {
+            ...prev,
+            messages: updatedMessages
+          };
+        });
       }
       
       // Уведомляем родительский компонент об обновлении

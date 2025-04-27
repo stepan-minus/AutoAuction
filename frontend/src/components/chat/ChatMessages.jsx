@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { Alert, Button, Form, Spinner, Image } from 'react-bootstrap';
 import { useAuth } from '../../context/AuthContext';
 import { formatDateTime } from '../../utils/dateUtils';
@@ -9,17 +9,66 @@ const ChatMessages = ({ conversation, onSendMessage, loading }) => {
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
+  const formContainerRef = useRef(null);
+  const scrolledInitially = useRef(false);
+  const userScrolledManually = useRef(false);
   const [error, setError] = useState('');
 
-  // Автоматическая прокрутка при получении новых сообщений
-  useEffect(() => {
-    scrollToBottom();
-  }, [conversation?.messages]);
+  // Установка стиля, чтобы форма ввода всегда была видна
+  useLayoutEffect(() => {
+    // Устанавливаем стили для контейнера с сообщениями
+    if (messagesContainerRef.current && formContainerRef.current) {
+      const formHeight = formContainerRef.current.offsetHeight;
+      messagesContainerRef.current.style.marginBottom = `${formHeight}px`;
+    }
+  }, []);
 
-  // Автоматическая прокрутка при первой загрузке
+  // Обработчик ручного скроллинга пользователем
+  const handleScroll = () => {
+    if (messagesContainerRef.current) {
+      const container = messagesContainerRef.current;
+      const scrollBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+      
+      // Если пользователь сам скроллит выше от дна контейнера
+      if (scrollBottom > 50) {
+        userScrolledManually.current = true;
+      } else {
+        userScrolledManually.current = false;
+      }
+    }
+  };
+
+  // Добавляем обработчик события скроллинга
   useEffect(() => {
-    if (conversation?.messages?.length > 0) {
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, []);
+
+  // Автоматическая прокрутка только при определенных условиях
+  useEffect(() => {
+    // Проверяем, добавилось ли новое сообщение
+    if (conversation?.messages && messagesContainerRef.current) {
+      const lastMessage = conversation.messages[conversation.messages.length - 1];
+      const isOwnLastMessage = lastMessage && lastMessage.sender && 
+                              lastMessage.sender.id === user.id;
+      
+      // Если это собственное сообщение или пользователь не скроллил сам вверх
+      if (isOwnLastMessage || !userScrolledManually.current) {
+        scrollToBottom();
+      }
+    }
+  }, [conversation?.messages?.length, user.id]);
+
+  // Автоматическая прокрутка только при первой загрузке
+  useEffect(() => {
+    if (conversation?.messages?.length > 0 && !scrolledInitially.current) {
       scrollToBottom();
+      scrolledInitially.current = true;
     }
   }, [conversation]);
 
@@ -115,7 +164,7 @@ const ChatMessages = ({ conversation, onSendMessage, loading }) => {
         )}
       </div>
       
-      <Form onSubmit={handleSubmit} className="chat-input">
+      <Form onSubmit={handleSubmit} className="chat-input" ref={formContainerRef}>
         <div className="d-flex position-relative">
           <Form.Control
             as="textarea"
@@ -137,6 +186,8 @@ const ChatMessages = ({ conversation, onSendMessage, loading }) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 if (message.trim()) {
+                  // Сбрасываем флаг прокрутки, чтобы автоматически проскроллить при отправке
+                  userScrolledManually.current = false;
                   onSendMessage(message.trim());
                   setMessage('');
                 }
@@ -151,6 +202,10 @@ const ChatMessages = ({ conversation, onSendMessage, loading }) => {
             type="submit" 
             className="skewed-button ms-2" 
             disabled={loading || !message.trim()}
+            onClick={() => {
+              // Сбрасываем флаг прокрутки, чтобы автоматически проскроллить при отправке
+              userScrolledManually.current = false;
+            }}
           >
             {loading ? <Spinner size="sm" animation="border" /> : 'Отправить'}
           </Button>

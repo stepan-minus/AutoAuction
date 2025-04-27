@@ -8,7 +8,7 @@
 }
 
 .auction-container {
-  max-width: var(--container-width);
+  max-width: 60%;  /* Изменено с var(--container-width) на 50% */
   margin: 0 auto;
   padding: var(--spacing-lg);
   background-color: #f6f4f0;
@@ -40,6 +40,16 @@
 @media (max-width: 992px) {
   .auction-content {
     grid-template-columns: 1fr;
+  }
+  
+  .auction-container {
+    max-width: 70%;  /* На планшетах расширяем до 70% */
+  }
+}
+
+@media (max-width: 768px) {
+  .auction-container {
+    max-width: 90%;  /* На мобильных устройствах расширяем до 90% */
   }
 }
 
@@ -655,6 +665,11 @@
 
 @media (max-width: 480px) {
   .auction-page-container {
+    padding: var(--spacing-sm);
+  }
+  
+  .auction-container {
+    max-width: 100%;  /* На очень маленьких экранах используем полную ширину */
     padding: var(--spacing-sm);
   }
   

@@ -126,16 +126,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # Получаем данные из сообщения
         message = event['message']
         
-        # Если отправитель - текущий пользователь, проверяем чтобы не отправлять ему же
+        # Добавляем уникальный идентификатор получателя к сообщению
+        message_with_receiver = message.copy()
+        message_with_receiver['receiver_id'] = self.user.id
+        
+        # Если отправитель - текущий пользователь, добавляем специальный флаг
         if message.get('sender') and message['sender'].get('id') == self.user.id:
-            # Пропускаем отправку - чтобы предотвратить дублирование у отправителя
-            # Сообщение уже отображается в интерфейсе
-            return
+            message_with_receiver['is_own'] = True
+        else:
+            message_with_receiver['is_own'] = False
             
         # Отправка сообщения клиенту
         await self.send(text_data=json.dumps({
             'type': 'message',
-            'message': message
+            'message': message_with_receiver
         }))
     
     async def new_message_notification(self, event):

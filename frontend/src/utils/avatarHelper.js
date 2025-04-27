@@ -43,6 +43,10 @@ const getCorrectMediaUrl = (path) => {
     
     // Если URL содержит media без api/ в начале, добавляем /api
     if (path.startsWith('/media/')) {
+      // Проверяем, не содержит ли URL уже /api/ в начале
+      if (path.includes('/api/media/')) {
+        return path.startsWith('http') ? path : `${window.location.origin}${path}`;
+      }
       const correctUrl = `${window.location.origin}/api${path}`;
       console.log('Добавление /api к медиа URL:', path, '->', correctUrl);
       return correctUrl;
@@ -80,6 +84,18 @@ export const fixAvatarUrl = (url) => {
     return defaultAvatar;
   }
   
+  // Проверяем, содержит ли URL уже /api/media
+  if (url.includes('/api/media/')) {
+    // URL уже в правильном формате, просто добавляем домен если нужно
+    if (!url.startsWith('http')) {
+      const fullUrl = `${window.location.origin}${url}`;
+      console.log('fixAvatarUrl: Добавление домена к API URL:', url, '->', fullUrl);
+      return fullUrl;
+    }
+    console.log('fixAvatarUrl: URL уже содержит /api/media и имеет домен:', url);
+    return url;
+  }
+  
   // Если URL содержит локальные адреса, заменяем на относительный путь
   if (url.includes('0.0.0.0:5000')) {
     const path = url.split('0.0.0.0:5000')[1];
@@ -101,6 +117,13 @@ export const fixAvatarUrl = (url) => {
     const path = url.split('localhost:5000')[1];
     const fixedUrl = `/api${path}`;
     console.log('fixAvatarUrl: Исправление URL для localhost:', url, '->', fixedUrl);
+    return fixedUrl;
+  }
+  
+  // Обработка простого пути /media/
+  if (url.startsWith('/media/')) {
+    const fixedUrl = `${window.location.origin}/api${url}`;
+    console.log('fixAvatarUrl: Добавление /api к пути /media/:', url, '->', fixedUrl);
     return fixedUrl;
   }
   
