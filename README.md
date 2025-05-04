@@ -5,7 +5,7 @@ This project is a web application for an auction platform built using Django for
 ## Project Structure
 
 ```
-project-name
+AutoAuction
 ├── backend
 │   ├── auction                # Auction application
 │   ├── users                  # User management application
